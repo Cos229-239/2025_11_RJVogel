@@ -6,21 +6,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,62 +47,85 @@ fun HomeScreen() {
 
 @Composable
 fun CurrentReadSection() {
-    Column {
-        Text(
-            "HOME",
-            fontSize = 57.sp,
+    Text(
+        "HOME",
+        fontSize = 57.sp,
             color = Color(0xFF0AAAFE6)
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+    Spacer(modifier = Modifier.height(32.dp))
 
-        Text("Current Read:",
+    Text("Current Read:",
             style = MaterialTheme.typography.headlineMedium,
             color = Color(0xFF071BFE5)
         )
+    Text("Book Title and author", style = MaterialTheme.typography.headlineSmall, color = Color(0xFF071BFE5))
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text("Book Title", style = MaterialTheme.typography.headlineSmall, color = Color(0xFF071BFE5))
-                Spacer(modifier = Modifier.height(32.dp))
-                CircularProgressIndicator(
-                    progress = 1.0f,
-                    modifier = Modifier
-                        .size(157.dp)
-                        .padding(start = 32.dp),
-                        strokeWidth = 10.dp,
-                    color = Color(0xFF00A8E8)
-                )
-                Row {
-                    Button(onClick = { /* TODO */ }) {
-                        Text("XXX pages left")
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    OutlinedButton(onClick = { /* TODO */ }) {
-                        Text("View Notes")
-                    }
-                }
-            }
-            Image(
-                painter = painterResource(id = android.R.drawable.ic_menu_gallery),
-                contentDescription = "Book Cover",
-                modifier = Modifier.size(100.dp)
-            )
+    Spacer(modifier = Modifier.height(32.dp))
+
+    Row {
+        CircularProgressIndicator(
+            progress = 1.0f,
+            modifier = Modifier
+                .size(157.dp)
+                .padding(start = 32.dp),
+            strokeWidth = 10.dp,
+            color = Color(0xFF00A8E8)
+        )
+
+        Image(
+            painter = painterResource(id = android.R.drawable.ic_menu_gallery),
+            contentDescription = "Book Cover",
+            modifier = Modifier
+                .size(125.dp)
+                .padding(start = 62.dp)
+                .offset(y = (-20).dp)
+        )
+    }
+
+    Spacer(modifier = Modifier.height(32.dp))
+
+    Row {
+        Spacer(modifier = Modifier.width(17.dp))
+
+        Button(onClick = { /* TODO */ },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF00A8E8)),
+            modifier = Modifier
+                .width(150.dp)
+                .height(48.dp)) {
+            Text("XXX pages left")
+        }
+
+        Spacer(modifier = Modifier.width(27.dp))
+
+        Button(onClick = { /* TODO */ },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF00A8E8)),
+            modifier = Modifier
+                .width(150.dp)
+                .height(48.dp)) {
+            Text("View Notes")
         }
     }
 }
 @Composable
 fun SimilarReadsSection() {
-    Column {
-        Text("Similar Reads:", style = MaterialTheme.typography.titleMedium, color = Color.White)
-        LazyRow {
-            val similarBooks = 0
-            items(similarBooks) { book ->
-                BookCard()
-            }
+    Spacer(modifier = Modifier.height(32.dp))
+
+    Text("Similar Reads:",
+            style = MaterialTheme.typography.headlineMedium,
+            color = Color(0xFF071BFE5))
+
+    Spacer(modifier = Modifier.height(57.dp))
+
+    LazyRow {
+        items(4) {
+            BookCard()
         }
     }
 }
+
 
 @Composable
 fun BookCard() {
@@ -116,7 +133,7 @@ fun BookCard() {
         Image(
             painter = painterResource(id = android.R.drawable.ic_menu_gallery),
             contentDescription = "book title",
-            modifier = Modifier.size(80.dp)
+            modifier = Modifier.size(90.dp)
         )
         Text("book title", style = MaterialTheme.typography.bodySmall, color = Color.White)
     }
