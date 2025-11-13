@@ -25,6 +25,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 
 @Composable
 fun HomeScreen() {
@@ -47,11 +51,25 @@ fun HomeScreen() {
 
 @Composable
 fun CurrentReadSection() {
-    Text(
-        "HOME",
-        fontSize = 57.sp,
+    Row{
+        Text(
+            "HOME",
+            fontSize = 57.sp,
             color = Color(0xFF0AAAFE6)
         )
+
+        Spacer(modifier = Modifier.width(150.dp))
+
+        IconButton(onClick = { /* TODO: open menu */ }) {
+            Icon(
+                imageVector = Icons.Default.Menu,
+                contentDescription = "Menu",
+                modifier = Modifier.size(90.dp),
+                tint = Color.White,
+            )
+        }
+    }
+
 
     Spacer(modifier = Modifier.height(32.dp))
 
@@ -138,8 +156,6 @@ fun BookCard() {
         Text("book title", style = MaterialTheme.typography.bodySmall, color = Color.White)
     }
 }
-
-
 
 @Composable
 fun BottomNavigationBar() {
