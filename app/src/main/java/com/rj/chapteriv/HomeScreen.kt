@@ -1,16 +1,22 @@
 package com.rj.chapteriv
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -29,6 +35,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.AttachFile
+import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.ui.draw.clip
 
 @Composable
 fun HomeScreen() {
@@ -83,7 +98,7 @@ fun CurrentReadSection() {
 
     Row {
         CircularProgressIndicator(
-            progress = 1.0f,
+            progress = 0.75f,
             modifier = Modifier
                 .size(157.dp)
                 .padding(start = 32.dp),
@@ -106,13 +121,19 @@ fun CurrentReadSection() {
     Row {
         Spacer(modifier = Modifier.width(17.dp))
 
-        Button(onClick = { /* TODO */ },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF00A8E8)),
+        Box(
             modifier = Modifier
-                .width(150.dp)
-                .height(48.dp)) {
-            Text("XXX pages left")
+                .size(width = 150.dp,
+                    height = 48.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .background(Color(0xFF00A8E8)),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "XXX Pages Left",
+                fontSize = 12.sp,
+                color = Color.White
+            )
         }
 
         Spacer(modifier = Modifier.width(27.dp))
@@ -159,7 +180,40 @@ fun BookCard() {
 
 @Composable
 fun BottomNavigationBar() {
-    Text("Bottom Navigation Placeholder", color = Color.White)
+    BottomAppBar(
+        containerColor = Color(0xFFEEEEEE), // Light gray background
+        contentPadding = PaddingValues(horizontal = 24.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            IconButton(onClick = { /* TODO: Home */ }) {
+                Icon(Icons.Filled.Bookmark,
+                    contentDescription = "Home",
+                    modifier = Modifier.size(55.dp),
+                    tint = Color.Black)
+            }
+            IconButton(onClick = { /* TODO: Library */ }) {
+                Icon(Icons.Filled.Book,
+                    contentDescription = "Library",
+                    modifier = Modifier.size(40.dp),
+                    tint = Color.Black)
+            }
+            IconButton(onClick = { /* TODO: Notes */ }) {
+                Icon(Icons.Filled.AttachFile,
+                    contentDescription = "Notes",
+                    modifier = Modifier.size(40.dp),
+                    tint = Color.Black)
+            }
+            IconButton(onClick = { /* TODO: Goals */ }) {
+                Icon(Icons.Filled.Star,
+                    contentDescription = "Goals",
+                    modifier = Modifier.size(40.dp),
+                    tint = Color.Black)
+            }
+        }
+    }
 }
 
 @Preview(showBackground = true, name = "Home Screen Preview")

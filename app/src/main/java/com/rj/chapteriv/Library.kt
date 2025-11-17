@@ -1,34 +1,30 @@
 package com.rj.chapteriv
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 
 @Composable
 fun LibraryScreen(){
@@ -50,15 +46,6 @@ fun LibraryScreen(){
 }
 
 @Composable
-fun BookRows() {
-    Text(
-        "not yet implemented",
-        fontSize = 16.sp,
-        color = Color(0xFF0AAAFE6)
-    )
-}
-
-@Composable
 fun FilterLine() {
     Row{
         Text(
@@ -67,7 +54,7 @@ fun FilterLine() {
             color = Color(0xFF0AAAFE6)
         )
 
-        Spacer(modifier = Modifier.width(75.dp))
+        Spacer(modifier = Modifier.width(90.dp))
 
         IconButton(onClick = { /* TODO: open menu */ }) {
             Icon(
@@ -79,9 +66,11 @@ fun FilterLine() {
         }
     }
 
-    Spacer(modifier = Modifier.height(24.dp))
+    Spacer(modifier = Modifier.height(30.dp))
 
-    Row{
+    Row(
+    modifier = Modifier.fillMaxWidth()
+    ){
 
         Button(onClick = { /* TODO */ },
             colors = ButtonDefaults.buttonColors(
@@ -139,6 +128,47 @@ fun FilterLine() {
         }
     }
 
+}
+
+@Composable
+fun BookRows() {
+    Spacer(modifier = Modifier.height(20.dp))
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        LazyRow {
+            items(3) {
+                BookCard()
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        LazyRow {
+            items(3) {
+                BookCard()
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        LazyRow {
+            items(3) {
+                BookCard()
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        LazyRow {
+            items(3) {
+                BookCard()
+            }
+        }
+
+    }
 }
 
 @Preview(showBackground = true, name = "Library Screen Preview")
