@@ -3,7 +3,6 @@ package com.rj.chapteriv
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,7 +15,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,23 +23,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun LibraryScreen(){
-    Scaffold(
-        bottomBar = { BottomNavigationBar() },
-        containerColor = Color(0xFF0484D81)
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            FilterLine()
-            Spacer(modifier = Modifier.height(24.dp))
-            BookRows()
-        }
+fun LibraryScreen(navController: NavHostController){
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        FilterLine()
+        Spacer(modifier = Modifier.height(24.dp))
+        BookRows()
     }
 }
 
@@ -174,5 +168,6 @@ fun BookRows() {
 @Preview(showBackground = true, name = "Library Screen Preview")
 @Composable
 fun Preview() {
-    LibraryScreen()
+    val navController = rememberNavController()
+    LibraryScreen(navController)
 }

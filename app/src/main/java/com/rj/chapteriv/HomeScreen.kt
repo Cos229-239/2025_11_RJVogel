@@ -5,10 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -17,55 +15,77 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AttachFile
+import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.AttachFile
-import androidx.compose.material.icons.filled.Book
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.ui.draw.clip
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun HomeScreen() {
+fun MainScreen() {
+    val navController = rememberNavController()
+
     Scaffold(
-        bottomBar = { BottomNavigationBar() },
+        bottomBar = { BottomNavigationBar(navController) },
         containerColor = Color(0xFF0484D81)
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-                .padding(16.dp)
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = "home",
+            modifier = Modifier.padding(innerPadding)
         ) {
-            CurrentReadSection()
-            Spacer(modifier = Modifier.height(24.dp))
-            SimilarReadsSection()
+            composable("home") { HomeScreen(navController) }
+            composable("library") { LibraryScreen(navController) }
+            composable("notes") { NotesScreen(navController) }
+            composable("goals") { GoalsScreen(navController) }
+
+            composable("characterNotes") { CharacterNotesScreen(navController) }
+            composable("quoteNotes") { QuoteNotesScreen(navController) }
+            composable("thoughtNotes") { ThoughtNotesScreen(navController) }
         }
     }
 }
 
 @Composable
-fun CurrentReadSection() {
+fun HomeScreen(navController: NavHostController) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        CurrentReadSection(navController)
+        Spacer(modifier = Modifier.height(24.dp))
+        SimilarReadsSection()
+    }
+}
+
+@Composable
+fun CurrentReadSection(navController: NavHostController) {
     Row{
         Text(
             "HOME",
@@ -138,7 +158,7 @@ fun CurrentReadSection() {
 
         Spacer(modifier = Modifier.width(27.dp))
 
-        Button(onClick = { /* TODO */ },
+        Button(onClick = { navController.navigate("notes") },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF00A8E8)),
             modifier = Modifier
@@ -179,45 +199,56 @@ fun BookCard() {
 }
 
 @Composable
-fun BottomNavigationBar() {
-    BottomAppBar(
-        containerColor = Color(0xFFEEEEEE), // Light gray background
-        contentPadding = PaddingValues(horizontal = 24.dp)
-    ) {
+fun BottomNavigationBar(navController: NavHostController) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    BottomAppBar(containerColor = Color(0xFFEEEEEE)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            IconButton(onClick = { /* TODO: Home */ }) {
-                Icon(Icons.Filled.Bookmark,
+            IconButton(onClick = { navController.navigate("home") }) {
+                Icon(
+                    Icons.Filled.Bookmark,
                     contentDescription = "Home",
-                    modifier = Modifier.size(55.dp),
-                    tint = Color.Black)
+                    modifier = Modifier.size(40.dp),
+                    tint = if (currentRoute == "home") Color(0xFF0484D8) else Color.Black
+                )
             }
-            IconButton(onClick = { /* TODO: Library */ }) {
-                Icon(Icons.Filled.Book,
+
+            IconButton(onClick = { navController.navigate("library") }) {
+                Icon(
+                    Icons.Filled.Book,
                     contentDescription = "Library",
                     modifier = Modifier.size(40.dp),
-                    tint = Color.Black)
+                    tint = if (currentRoute == "library") Color(0xFF0484D8) else Color.Black
+                )
             }
-            IconButton(onClick = { /* TODO: Notes */ }) {
-                Icon(Icons.Filled.AttachFile,
+
+            IconButton(onClick = { navController.navigate("notes") }) {
+                Icon(
+                    Icons.Filled.AttachFile,
                     contentDescription = "Notes",
                     modifier = Modifier.size(40.dp),
-                    tint = Color.Black)
+                    tint = if (currentRoute == "notes") Color(0xFF0484D8) else Color.Black
+                )
             }
-            IconButton(onClick = { /* TODO: Goals */ }) {
-                Icon(Icons.Filled.Star,
+
+            IconButton(onClick = { navController.navigate("goals") }) {
+                Icon(
+                    Icons.Filled.Star,
                     contentDescription = "Goals",
                     modifier = Modifier.size(40.dp),
-                    tint = Color.Black)
+                    tint = if (currentRoute == "goals") Color(0xFF0484D8) else Color.Black
+                )
             }
         }
     }
 }
 
-@Preview(showBackground = true, name = "Home Screen Preview")
+@Preview(showBackground = true, name = "Main Screen Preview")
 @Composable
-fun PreviewScreen() {
-    HomeScreen()
+fun PreviewMainScreen() {
+    MainScreen()
 }
